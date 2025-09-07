@@ -1,0 +1,58 @@
+/* Базовые стили для тела документа */
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: #f0f0f0;
+}
+
+/* Стили для основного контейнера галереи */
+.gallery-container {
+  display: flex; /* Включаем Flexbox */
+  flex-wrap: wrap; /* Разрешаем перенос на новую строку */
+  justify-content: center; /* Выравниваем карточки по центру */
+  gap: 20px; /* Современный способ задать отступы между элементами */
+}
+
+/* Стили для отдельной карточки товара */
+.card {
+  background: white;
+  border-radius: 10px; /* Скругляем углы */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Тень для объема */
+  width: 300px; /* Фиксированная ширина карточки */
+  padding: 15px;
+  text-align: center;
+  display: flex;
+  flex-direction: column; /* Чтобы кнопка прижалась к низу */
+}
+
+.card img {
+  width: 100%; /* Картинка на всю ширину карточки */
+  height: 200px; /* Фиксированная высота */
+  object-fit: contain; /* Вписываем картинку, чтобы не искажалась */
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+.card h2 {
+  font-size: 1.2em;
+  margin: 10px 0;
+}
+
+.card p {
+  flex-grow: 1; /* Заставляет описание растягиваться, прижимая кнопку к низу */
+}
+
+.card button {
+  background-color: #4CAF50; /* Зеленый */
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+.card button:hover {
+  background-color: #3e8e41; /* Темно-зеленый при наведении */
+}

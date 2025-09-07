@@ -1,9 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import MainTitle from './MainTitle.tsx' // Импортируем новый компонент
+import App from './App' // Относительный путь без расширения
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <MainTitle /> {/* Используем новый компонент */}
+    <App />
   </React.StrictMode>,
 )

@@ -3,7 +3,7 @@ export interface Product {
   name: string;
   price: number;
   description: string;
-  imageUrl: string; 
+  imageUrl: string;
   category: string;
 }
 
@@ -25,3 +25,5 @@ export interface ProductCardProps {
   onIncreaseQuantity: (product: Product) => void;
   onDecreaseQuantity: (product: Product) => void;
 }
+
+

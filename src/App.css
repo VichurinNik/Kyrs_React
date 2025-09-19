@@ -1,58 +1,52 @@
 /* Базовые стили для тела документа */
 body {
-  font-family: sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
-  padding: 20px;
-  background-color: #f0f0f0;
+  padding: 0;
+  background-color: #f8f9fa;
 }
 
-/* Стили для основного контейнера галереи */
+/* Дополнительные стили для улучшения внешнего вида */
 .gallery-container {
-  display: flex; /* Включаем Flexbox */
-  flex-wrap: wrap; /* Разрешаем перенос на новую строку */
-  justify-content: center; /* Выравниваем карточки по центру */
-  gap: 20px; /* Современный способ задать отступы между элементами */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
 }
 
-/* Стили для отдельной карточки товара */
+/* Стили для карточек - теперь они будут работать вместе с Bootstrap */
 .card {
-  background: white;
-  border-radius: 10px; /* Скругляем углы */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Тень для объема */
-  width: 300px; /* Фиксированная ширина карточки */
-  padding: 15px;
-  text-align: center;
-  display: flex;
-  flex-direction: column; /* Чтобы кнопка прижалась к низу */
+  transition: transform 0.2s ease-in-out;
+  border: none;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
 }
 
 .card img {
-  width: 100%; /* Картинка на всю ширину карточки */
-  height: 200px; /* Фиксированная высота */
-  object-fit: contain; /* Вписываем картинку, чтобы не искажалась */
-  border-radius: 5px;
-  margin-bottom: 15px;
+  border-radius: 5px 5px 0 0;
 }
 
-.card h2 {
-  font-size: 1.2em;
-  margin: 10px 0;
-}
-
-.card p {
-  flex-grow: 1; /* Заставляет описание растягиваться, прижимая кнопку к низу */
-}
-
-.card button {
-  background-color: #4CAF50; /* Зеленый */
+/* Кастомные стили для кнопок если нужно */
+.btn-custom {
+  background-color: #4CAF50;
   border: none;
   color: white;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 15px;
 }
 
-.card button:hover {
-  background-color: #3e8e41; /* Темно-зеленый при наведении */
+.btn-custom:hover {
+  background-color: #3e8e41;
+}
+
+/* Адаптивные стили */
+@media (max-width: 768px) {
+  .gallery-container {
+    gap: 15px;
+  }
+  
+  .card {
+    margin-bottom: 15px;
+  }
 }

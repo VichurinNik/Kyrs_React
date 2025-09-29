@@ -1,57 +1,84 @@
 import React, { useState, useMemo } from 'react';
-import type { Product } from './types';
+import type { Product, CartItem } from './types';
 import ProductCard from './components/ProductCard';
+import Header from './components/Header';
 import { products } from './data';
 
 const App: React.FC = () => {
-  // Состояние для поискового запроса
+  // Состояние для корзины
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+
+  // Состояние для поиска
   const [searchQuery, setSearchQuery] = useState<string>('');
 
-  // Правильная типизация обработчика изменений
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  // Обработчик поиска
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
   };
 
-  // Фильтрация товаров с useMemo для оптимизации
+  // Фильтрация товаров
   const filteredProducts = useMemo(() => {
-    if (!searchQuery.trim()) {
-      return products;
-    }
-    
+    if (!searchQuery.trim()) return products;
     const query = searchQuery.toLowerCase();
-    return products.filter(product => 
-      product.name.toLowerCase().includes(query) ||
-      product.description.toLowerCase().includes(query)
+    return products.filter(
+      product =>
+        product.name.toLowerCase().includes(query) ||
+        product.description.toLowerCase().includes(query)
     );
   }, [searchQuery]);
 
-  // Обработчики для кнопок
-  const handleAddToCart = (product: Product): void => {
-    console.log(`Товар "${product.name}" добавлен в корзину`);
+  // Добавление товара в корзину
+  const handleAddToCart = (product: Product) => {
+    setCartItems(prevItems => {
+      const existingItem = prevItems.find(item => item.id === product.id);
+      if (existingItem) {
+        return prevItems.map(item =>
+          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+        );
+      } else {
+        return [...prevItems, { ...product, quantity: 1 }];
+      }
+    });
   };
 
-  const handleViewDetails = (product: Product): void => {
-    console.log(`Просмотр деталей товара: ${product.name}`);
+  // Увеличение количества
+  const handleIncreaseQuantity = (product: Product) => {
+    setCartItems(prevItems =>
+      prevItems.map(item =>
+        item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+      )
+    );
   };
 
-  const handleIncreaseQuantity = (product: Product): void => {
-    console.log(`Увеличено количество товара ${product.name}`);
+  // Уменьшение количества
+  const handleDecreaseQuantity = (product: Product) => {
+    setCartItems(prevItems =>
+      prevItems
+        .map(item =>
+          item.id === product.id ? { ...item, quantity: item.quantity - 1 } : item
+        )
+        .filter(item => item.quantity > 0)
+    );
   };
 
-  const handleDecreaseQuantity = (product: Product): void => {
-    console.log(`Уменьшено количество товара ${product.name}`);
-  };
+  // Общее количество товаров в корзине
+  const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <div className="container my-4">
+      {/* Header с количеством товаров */}
+      <Header cartItemCount={totalItems} />
+
       <h1 className="text-center mb-4">Магазин Рика и Морти</h1>
-      
+
       {/* Поле поиска */}
       <div className="row mb-4">
         <div className="col-md-6 mx-auto">
           <input
             type="text"
-            className={`form-control ${searchQuery && filteredProducts.length === 0 ? 'is-invalid' : ''}`}
+            className={`form-control ${
+              searchQuery && filteredProducts.length === 0 ? 'is-invalid' : ''
+            }`}
             placeholder="Поиск товаров..."
             value={searchQuery}
             onChange={handleSearchChange}
@@ -64,7 +91,7 @@ const App: React.FC = () => {
         </div>
       </div>
 
-      {/* Отображение количества найденных товаров */}
+      {/* Количество найденных товаров */}
       {searchQuery && (
         <div className="row mb-3">
           <div className="col">
@@ -82,7 +109,7 @@ const App: React.FC = () => {
             <ProductCard
               product={product}
               onAddToCart={handleAddToCart}
-              onViewDetails={handleViewDetails}
+              onViewDetails={product => console.log('Просмотр товара', product)}
               onIncreaseQuantity={handleIncreaseQuantity}
               onDecreaseQuantity={handleDecreaseQuantity}
             />

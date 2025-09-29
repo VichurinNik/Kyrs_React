@@ -25,5 +25,7 @@ export interface ProductCardProps {
   onIncreaseQuantity: (product: Product) => void;
   onDecreaseQuantity: (product: Product) => void;
 }
-
+export interface CartItem extends Product {
+  quantity: number;
+}
 

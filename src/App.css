@@ -1,0 +1,52 @@
+/* Базовые стили для тела документа */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f8f9fa;
+}
+
+/* Дополнительные стили для улучшения внешнего вида */
+.gallery-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* Стили для карточек - теперь они будут работать вместе с Bootstrap */
+.card {
+  transition: transform 0.2s ease-in-out;
+  border: none;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.card img {
+  border-radius: 5px 5px 0 0;
+}
+
+/* Кастомные стили для кнопок если нужно */
+.btn-custom {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+}
+
+.btn-custom:hover {
+  background-color: #3e8e41;
+}
+
+/* Адаптивные стили */
+@media (max-width: 768px) {
+  .gallery-container {
+    gap: 15px;
+  }
+  
+  .card {
+    margin-bottom: 15px;
+  }
+}

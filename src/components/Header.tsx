@@ -1,40 +1,29 @@
-// src/components/Header.tsx
 import React from "react";
-import { useCurrency } from "../context/CurrencyContext";
-import { currencyInfo } from "../types";
+import { useCurrency } from "../contexts/CurrencyContext";
 
 interface HeaderProps {
   cartItemCount: number;
 }
 
 const Header: React.FC<HeaderProps> = ({ cartItemCount }) => {
-  const { currentCurrency, setCurrency } = useCurrency();
+  const { currency, setCurrency, symbol } = useCurrency();
 
   return (
     <header className="d-flex justify-content-between align-items-center mb-4">
-      <h2>🛒 Rick & Morty Store</h2>
-
-      <div className="d-flex align-items-center gap-3">
-        {/* 🔄 Селектор валюты */}
+      <h3>
+        🛒 Корзина: {cartItemCount} шт. ({symbol})
+      </h3>
+      <div>
         <select
-          className="form-select form-select-sm w-auto"
-          value={currentCurrency}
-          onChange={(e) => setCurrency(e.target.value as keyof typeof currencyInfo)}
+          className="form-select"
+          style={{ width: "150px" }}
+          value={currency}
+          onChange={(e) => setCurrency(e.target.value as any)}
         >
           <option value="shmeckles">₴ Шмекели</option>
           <option value="credits">₢ Кредиты</option>
           <option value="flurbos">♦ Флурбо</option>
         </select>
-
-        {/* 🧺 Корзина */}
-        <button className="btn btn-outline-primary position-relative">
-          <i className="bi bi-cart4"></i>
-          {cartItemCount > 0 && (
-            <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-              {cartItemCount}
-            </span>
-          )}
-        </button>
       </div>
     </header>
   );

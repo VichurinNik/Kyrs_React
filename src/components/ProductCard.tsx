@@ -1,9 +1,8 @@
-// src/components/ProductCard.tsx
-import React from 'react';
-import type { ProductCardProps } from '../types';
-import StandardButton from './StandardButton';
-import { useCurrency } from '../context/CurrencyContext';
-import { currencyInfo } from '../types';
+import React from "react";
+import type { ProductCardProps, Currency } from "../types";
+import StandardButton from "./StandardButton";
+import { useCurrency } from "../contexts/CurrencyContext";
+import { currencyInfo } from "../types";
 
 const ProductCard: React.FC<ProductCardProps> = ({
   product,
@@ -12,23 +11,27 @@ const ProductCard: React.FC<ProductCardProps> = ({
   onIncreaseQuantity,
   onDecreaseQuantity,
 }) => {
-  const { currentCurrency } = useCurrency();
-  const { symbol } = currencyInfo[currentCurrency];
-  const price = product.prices[currentCurrency];
+  const { currency } = useCurrency();
+  const symbol = currencyInfo[currency as Currency].symbol;
+  const price = product.prices[currency as Currency];
 
   return (
-    <div className="card h-100">
-      <img
-        src={product.imageUrl}
-        className="card-img-top"
-        alt={product.name}
-        style={{ height: '200px', objectFit: 'cover' }}
-      />
+    <div className="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
+      <div className="position-relative">
+        <img
+          src={product.imageUrl}
+          alt={product.name}
+          className="card-img-top"
+          style={{ height: 200, objectFit: "cover" }}
+        />
+        <span className="position-absolute top-0 end-0 m-2 px-2 py-1 bg-warning text-dark fw-bold rounded">
+          {price.toFixed(2)} {symbol}
+        </span>
+      </div>
       <div className="card-body d-flex flex-column">
-        <h5 className="card-title">{product.name}</h5>
-        <p className="card-text flex-grow-1">{product.description}</p>
-        <p className="card-text fw-bold">
-          {price} {symbol}
+        <h5 className="card-title text-truncate">{product.name}</h5>
+        <p className="card-text text-muted flex-grow-1" style={{ fontSize: "0.9rem" }}>
+          {product.description}
         </p>
 
         <div className="mt-auto">
@@ -39,10 +42,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
               title="Добавить в корзину"
               btnType="textButton"
               onClick={() => onAddToCart(product)}
-              className="w-100"
             />
           </div>
-
           <div className="d-flex gap-2">
             <StandardButton
               BGcolor="info"
